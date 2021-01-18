@@ -1,0 +1,93 @@
+﻿<!-- 
+	Copyright (c) 2009 Daniel Grunwald
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy of this
+	software and associated documentation files (the "Software"), to deal in the Software
+	without restriction, including without limitation the rights to use, copy, modify, merge,
+	publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+	to whom the Software is furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in all copies or
+	substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+	INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+	DEALINGS IN THE SOFTWARE.
+-->
+<Window x:Class="ICSharpCode.AvalonEdit.Sample.Window1"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+	xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+	Title="文本框" Height="500" Width="700"
+	>
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+                            <Setter Property="Opacity" Value="0.30" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToolBar.Resources>
+            <Button Click="openFileClick">
+                <Image Source="Images/Open.png" Height="16"/>
+            </Button>
+            <Button Click="saveFileClick"/>
+
+            <Separator/>
+            <Button Command="Cut"/>
+            <Separator/>
+            <Separator/>
+            <CheckBox IsChecked="{Binding ElementName=textEditor,Path=WordWrap}" Content="自动换行">
+				
+            </CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}"/>
+            <CheckBox IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
+                <TextBlock Width="16" TextAlignment="Center">¶</TextBlock>
+            </CheckBox>
+			<Button Click="imgFileClick" Content="插图片1" />
+				<Button Click="imgFileClick2" Content="插图片2" />
+			<Button Click="iClick" Content="B" FontWeight="Bold"></Button>
+            <Button Click="bClick" Content="I" FontStyle="Italic"></Button>
+            <Button Click="imgFileClick" Content="U" ></Button>
+            <ComboBox x:Name="cbBox" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" SelectionChanged="selectFont">
+                <TextBlock Text="12px" />
+				<TextBlock Text="14px" FontSize="14"/>
+				<TextBlock Text="20px" FontSize="20"/>
+            </ComboBox>
+
+        </ToolBar>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+			<avalonEdit:TextEditor
+				Name="textEditor"
+				FontFamily="Consolas"
+				FontSize="10pt"
+				
+			>图文混排测试=============
+            </avalonEdit:TextEditor>
+
+            <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Left"/>
+            <DockPanel Grid.Column="1" >
+                <ComboBox Name="propertyGridComboBox" DockPanel.Dock="Top"
+				          SelectedIndex="0" SelectionChanged="propertyGridComboBoxSelectionChanged">
+                    <ComboBoxItem>TextEditor</ComboBoxItem>
+                    <ComboBoxItem>TextArea</ComboBoxItem>
+                    <ComboBoxItem>Options</ComboBoxItem>
+                </ComboBox>
+				<WindowsFormsHost DockPanel.Dock="Right" Name="propertyGridHost">
+					<forms:PropertyGrid x:Name="propertyGrid"/>
+				</WindowsFormsHost>
+			</DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>
